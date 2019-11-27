@@ -70,7 +70,10 @@
               <span>退出</span>
           </div>
         </el-header>
-        <el-main>Main</el-main>
+        <!-- //配置子路由映射 -->
+        <el-main>
+            <router-view></router-view>
+        </el-main>
       </el-container>
     </el-container>
   </div>

@@ -7,6 +7,7 @@ import VueRouter from 'vue-router'
 // 引入组件
 import Login from '../views/login.vue'
 import Index from '../views/index.vue'
+import Welpage from '../views/welpage.vue'
 // 3.vue.use管理
 Vue.use(VueRouter)
 // 4.创建vue实例对象
@@ -22,7 +23,17 @@ var router = new VueRouter({
       // 这是index后台系统管理页面
       name: 'Index',
       path: '/index',
-      component: Index
+      component: Index,
+      // 添加重定向，让其展示欢迎页面
+      redirect: { name: 'Welpage' },
+      // 路由嵌套
+      children: [
+        {
+          name: 'Welpage',
+          path: '/welpage',
+          component: Welpage
+        }
+      ]
     }
   ]
 })
