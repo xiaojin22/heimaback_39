@@ -59,18 +59,14 @@ export default {
       // 1.2登录前要验证登录是否符合，如果密码。账号正确，登录成功则到index首页
       this.$refs.ruleUser.validate(async valid => {
         //    valid返回true登录成功，验证通过，发起登录请求
-        console.log(this.$refs.ruleUser)
         if (valid) {
-          alert(111)
-          console.log(234)
           // 1.1this.ruleUser；通过ref定义；获取input表单要提交请求的数据
           let res = await getloginData(this.ruleUser)
-          console.log(res)
           if (res.data.message === '登录成功') {
             // 登录到index管理系统后台页面
             this.$router.push({ path: '/index' })
             // 将tonken值存储到本地
-            // localStorage.setItem('heima_back_39_token', res.data.data.token)
+            localStorage.setItem('heima_back_39_token', res.data.data.token)
           } else {
             // 给出错误提示
             this.$message.error(res.data.message)

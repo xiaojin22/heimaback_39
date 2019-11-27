@@ -26,5 +26,21 @@ var router = new VueRouter({
     }
   ]
 })
-// 5.暴露router
+// 5,添加导航守卫；；判断用户是否有登陆状态保持，如果有token则可以进行跳转，否则重定向到登陆
+// to:到哪去；next（）下一个，from：从哪来
+router.beforeEach((to, from, next) => {
+  // 不是在登录login页面
+  if (to.path !== '/login') {
+    // 先获取token值，进行判断
+    let token = localStorage.getItem('heima_back_39_token')
+    if (token) {
+      next()// 有token，可以下一次跳转
+    } else {
+      next({ path: '/login' })// 无token。到登录页面登录
+    }
+  } else {
+    next()// 继续当前的跳转
+  }
+})
+// 6.暴露router
 export default router
