@@ -34,7 +34,7 @@
               <span>文章管理</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="2-1">
+              <el-menu-item index="postlist">
                 <i class="el-icon-menu"></i>
                 文章列表
               </el-menu-item>
@@ -80,7 +80,9 @@
 </template>
 
 <script>
-export default {}
+export default {
+
+}
 </script>
 
 <style scoped lang="less">

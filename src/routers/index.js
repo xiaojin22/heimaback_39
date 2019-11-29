@@ -8,6 +8,7 @@ import VueRouter from 'vue-router'
 import Login from '../views/login.vue'
 import Index from '../views/index.vue'
 import Welpage from '../views/welpage.vue'
+import Postlist from '../views/postlist.vue'
 // 3.vue.use管理
 Vue.use(VueRouter)
 // 4.创建vue实例对象
@@ -29,9 +30,16 @@ var router = new VueRouter({
       // 路由嵌套
       children: [
         {
+          // 欢迎页面welpage
           name: 'Welpage',
-          path: '/welpage',
+          path: 'welpage',
           component: Welpage
+        },
+        {
+          // 文章列表页面postlist
+          name: 'Postlist',
+          path: 'postlist',
+          component: Postlist
         }
       ]
     }
