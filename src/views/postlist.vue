@@ -46,15 +46,15 @@
       </el-table-column>
     </el-table>
     <!-- //分页 -->
-     <!-- <el-pagination
+     <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :current-page="currentPage4"
-      :page-sizes="[100, 200, 300, 400]"
-      :page-size="100"
+      :current-page="pageIndex"
+      :page-sizes="[2, 4, 6, 8]"
+      :page-size="pageSize"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="400">
-    </el-pagination> -->
+      :total="total">
+    </el-pagination>
   </div>
 </template>
 
@@ -65,28 +65,52 @@ export default {
     return {
       // 定义pageindex和pagesize；
       pageIndex: 1,
-      pageSize: 5,
+      pageSize: 2,
+      total: 100, // 当前总页数
       // 文章列表数据
       postsList: []
     }
   },
   // 操作中的方法
   methods: {
+    // 将获取列表数据封装成init方法。
+    async init () {
+      let res = await getPostslist({
+        pageIndex: this.pageIndex,
+        pageSize: this.pageSize
+      })
+      this.postsList = res.data.data
+      // 当前文章列表的总页数
+      this.total = res.data.total
+      console.log(this.total)
+    },
     handleEdit (index, row) {
       console.log(index, row)
     },
     handleDelete (index, row) {
       console.log(index, row)
+    },
+    // 分页中的方法
+    // 1, 切换每页显示记录数时触发
+    handleSizeChange (val) {
+      console.log(`每页 ${val} 条`)
+      // 重置pageSize
+      this.pageSize = val
+      // 使用重置后的pageSize重新获取数据
+      this.init()
+    },
+    // 2,切换当前页码时触发
+    handleCurrentChange (val) {
+      console.log(`当前页: ${val}`)
+      // 重置pageIndex
+      this.pageIndex = val
+      // 使用重置后的pageSize重新获取数据
+      this.init()
     }
   },
-  // 获取文章列表数据
+  // 获取文章列表数据;
   async mounted () {
-    let res = await getPostslist({
-      pageIndex: this.pageIndex,
-      pageSize: this.pageSize
-    })
-    this.postsList = res.data.data
-    console.log(this.postsList)
+    this.init()// 调用封装好的获取文章列表数据的方法
   },
   // 添加局部过滤器；由于页面中的日期和类型显示格式不对
   filters: {
