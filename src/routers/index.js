@@ -9,6 +9,8 @@ import Login from '../views/login.vue'
 import Index from '../views/index.vue'
 import Welpage from '../views/welpage.vue'
 import Postlist from '../views/postlist.vue'
+import Addpost from '../views/addpost.vue'
+
 // 3.vue.use管理
 Vue.use(VueRouter)
 // 4.创建vue实例对象
@@ -37,6 +39,12 @@ var router = new VueRouter({
         },
         {
           // 文章列表页面postlist
+          name: 'Addpost',
+          path: 'addpost',
+          component: Addpost
+        },
+        {
+          // 追加一篇文章；文章发布addpost页面
           name: 'Postlist',
           path: 'postlist',
           component: Postlist

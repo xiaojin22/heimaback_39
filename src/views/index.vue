@@ -38,10 +38,10 @@
                 <i class="el-icon-menu"></i>
                 文章列表
               </el-menu-item>
-              <el-menu-item index="2-2">
+              <el-menu-item index="addpost">
                 <i class="el-icon-menu"></i>
                 文章发布
-              </el-menu-item>
+              </el-menu-item >
             </el-menu-item-group>
           </el-submenu>
         <!-- //栏目管理、 -->

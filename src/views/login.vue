@@ -26,7 +26,7 @@
 
 <script>
 // 引入封装好的myaxios方法
-import { getloginData } from '../apis/myaxios.js'
+import { getloginData } from '../apis/users.js'
 export default {
   data () {
     return {
