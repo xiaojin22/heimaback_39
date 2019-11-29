@@ -20,10 +20,24 @@
             <el-radio :label="2">视频</el-radio>
           </el-radio-group>
         </el-form-item>
-        <!-- //内容、富文本框 ;;判断，如果类型等于1；文章 1.给组件添加ref；-->
+        <!-- //发布文章;;内容、富文本框 ;;判断，如果类型等于1；文章 1.给组件添加ref；-->
         <el-form-item label="内容" v-if='postform.type===1'>
           <VueEditor :config="config" ref="vueEditor" />
         </el-form-item>
+        <!-- //文件上传；elment-ui组件；视频的上传 -->
+         <el-form-item label="内容" v-if='postform.type===2'>
+        <el-upload
+            class="upload-demo"
+            action="http://localhost:3000/upload"
+            multiple
+            :headers='getToken()'
+            :limit="3"
+            :on-success='onsuccess'
+            :file-list="fileList">
+            <el-button size="small" type="primary">点击上传</el-button>
+             <div slot="tip" class="el-upload__tip">只能上传视频文件</div>
+         </el-upload>
+         </el-form-item>
         <!-- //发布文章 -->
         <el-form-item>
           <el-button type="primary" @click="pulishPost">发布文章</el-button>
@@ -41,6 +55,8 @@ import 'quill/dist/quill.snow.css'
 export default {
   data () {
     return {
+      // 视频文件上传的列表
+      fileList: [],
       // 定义要发布文章要传递的参数
       postform: {
         titel: '', // 文章标题
@@ -83,6 +99,16 @@ export default {
   },
   // 发布文章数据
   methods: {
+    // 上传视频文件；elment-ui；文件上传；；；onsuccess文件上传成功的钩子函数
+    onsuccess (response, file, fileList) {
+      if (response.message === '文件上传成功') {
+        // 获取文件文件的数据；用基准地址进行拼接路径
+        this.postform.content = localStorage.getItem('heima_back_39_baseURL') + response.data.url
+        // 提示上传成功
+        this.$message.success(response.message)
+      }
+      console.log(response)
+    },
     // 由于富文本框的上传图片没有使用我们自己设置的请求拦截器；
     // 该插件有自己的headers；上传头信息；封装返回token的函数、
     getToken () {

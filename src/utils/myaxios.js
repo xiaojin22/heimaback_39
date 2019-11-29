@@ -3,6 +3,8 @@ import axios from 'axios'
 
 // 2.创建基准路径
 axios.defaults.baseURL = 'http://localhost:3000'
+// 将服务器的基准路径存储到本地存储中
+localStorage.setItem('heima_back_39_baseURL', 'http://localhost:3000')
 // 在发送请求之前。添加请求拦截器
 // 添加请求拦截器
 axios.interceptors.request.use(function (config) {
