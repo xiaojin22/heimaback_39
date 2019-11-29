@@ -36,8 +36,20 @@
             :file-list="fileList">
             <el-button size="small" type="primary">点击上传</el-button>
              <div slot="tip" class="el-upload__tip">只能上传视频文件</div>
-         </el-upload>
-         </el-form-item>
+            </el-upload>
+          </el-form-item>
+         <!-- //封面上传 on-remove文件列表移除文件时的钩子-->
+            <el-form-item label="封面">
+             <el-upload
+                action="http://localhost:3000/upload"
+                list-type="picture-card"
+                :headers='getToken()'
+                :on-success="imgsuccess"
+                :on-remove="imgremove"
+                >
+                <i class="el-icon-plus"></i>
+                </el-upload>
+          </el-form-item>
         <!-- //发布文章 -->
         <el-form-item>
           <el-button type="primary" @click="pulishPost">发布文章</el-button>
@@ -99,6 +111,32 @@ export default {
   },
   // 发布文章数据
   methods: {
+    // 移除封面图片的钩子函数；
+    imgremove (file, fileList) {
+    //   console.log(file)// 是本次移除的图片
+    //   console.log(fileList)// 剩下的图片
+      // 根据本次移除的图片信息去删除postForm的cover中的图片存储信息
+      for (var i = 0; i < this.postform.cover.length; i++) {
+        // 如果移除的图片id=循环到的id；则将该id的图片移除
+        if (this.postform.cover[i].id === file.response.data.id) {
+          this.postform.cover.splice(i, 1)
+        }
+      }
+    },
+    // 封面图片上传成功的钩子
+    imgsuccess (response, file, fileList) {
+      if (response.message === '文件上传成功') {
+        // 获取封面的cover的id;往cover数组中追加对象id
+        this.postform.cover.push({
+          id: response.data.id
+        })
+        // 获取封面图片的数据；用基准地址进行拼接路径
+        this.postform.content = localStorage.getItem('heima_back_39_baseURL') + response.data.url
+        // 提示上传成功
+        this.$message.success(response.message)
+      }
+      console.log(response)
+    },
     // 上传视频文件；elment-ui；文件上传；；；onsuccess文件上传成功的钩子函数
     onsuccess (response, file, fileList) {
       if (response.message === '文件上传成功') {
